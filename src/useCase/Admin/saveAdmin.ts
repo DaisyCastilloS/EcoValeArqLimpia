@@ -9,7 +9,7 @@ export default class SaveAdmin implements SaveAdminInterface {
     this.AdminRepository = AdminRepository;
   }
 
-  async execute(AdminToSave: Admin): Promise<void> {
-    await this.AdminRepository.save(AdminToSave);
+  async execute(admin: Admin): Promise<void> {
+    await this.AdminRepository.save(admin);
   }
 }

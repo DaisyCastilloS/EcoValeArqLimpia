@@ -9,8 +9,8 @@ export default class DeleteRecyclingPoint implements SaveRecyclingPointInterface
     this.RecyclingPointRepository = RecyclingPointRepository;
   }
 
-  async execute(RecyclingPointToSave: RecyclingPoint): Promise<void> {
-    const result = await this.RecyclingPointRepository.save(RecyclingPointToSave);
+  async execute(recyclingPoint: RecyclingPoint): Promise<void> {
+    const result = await this.RecyclingPointRepository.save(recyclingPoint);
     return result;
   }
 }

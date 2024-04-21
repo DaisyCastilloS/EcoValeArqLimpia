@@ -9,7 +9,7 @@ export default class DeleteRecyclingPoint implements FindAllRecyclingPointInterf
     this.RecyclingPointRepository = RecyclingPointRepository;
   }
 
-  async execute(): Promise<RecyclingPoint[]> {
+  async execute(): Promise<RecyclingPoint[] | undefined> {
     const result = await this.RecyclingPointRepository.getAll();
     return result;
   }

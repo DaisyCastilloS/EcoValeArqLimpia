@@ -1,5 +1,5 @@
 import { Voucher } from '../../entity/VoucherInterface';
 
 export interface FindAllVoucherInterface {
-  execute: (VoucherToFind: Voucher) => Promise<Voucher[]>
+  execute: (GetAllVouchers: Voucher) => Promise<Voucher[] | undefined>
 }

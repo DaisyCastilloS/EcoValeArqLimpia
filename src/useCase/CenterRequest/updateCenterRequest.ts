@@ -1,16 +1,16 @@
 import { CenterRequest } from '../../domain/entity/CenterRequestInterface';
 import { CenterRequestRepositoryInterface } from '../../domain/repository/CenterRequestRepository';
-import { SaveCenterRequestInterface } from '../../domain/useCases/CenterRequest/saveCenterRequest';
+import { UpdateCenterRequestInterface } from '../../domain/useCases/CenterRequest/updateCenterRequest';
 
-export default class SaveCenterRequest implements SaveCenterRequestInterface {
-  CenterRequestRepository: CenterRequestRepositoryInterface;
+export default class SaveCenterRequest implements UpdateCenterRequestInterface {
+  centerRequestRepository: CenterRequestRepositoryInterface;
 
   constructor(centerRequestRepository: CenterRequestRepositoryInterface) {
-    this.CenterRequestRepository = centerRequestRepository;
+    this.centerRequestRepository = centerRequestRepository;
   }
 
   async execute(CenterRequestToUpdate: CenterRequest): Promise<void> {
-    const result = await this.CenterRequestRepository.update(CenterRequestToUpdate);
+    const result = await this.centerRequestRepository.updateById(CenterRequestToUpdate.id);
     return result;
   }
 }

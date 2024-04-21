@@ -2,7 +2,7 @@ import { Role } from '../../domain/entity/RoleInterface';
 import { RoleRepositoryInterface } from '../../domain/repository/RoleRepository';
 import { FindByIdRoleInterface } from '../../domain/useCases/Role/findByIdRole';
 
-export default class FindByIdRole implements FindByIdRoleInterface  {
+export default class FindByIdRole implements FindByIdRoleInterface {
   RoleRepository: RoleRepositoryInterface;
 
   constructor(RoleRepository: RoleRepositoryInterface) {

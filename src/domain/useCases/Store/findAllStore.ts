@@ -1,5 +1,5 @@
 import { Store } from '../../entity/StoreInterface';
 
 export interface FindAllStoreInterface {
-  execute: (StoreToFind: Store) => Promise<Store[]>
+  execute: (GetAllStores: Store) => Promise<Store[] | undefined>
 }

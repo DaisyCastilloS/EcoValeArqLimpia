@@ -2,7 +2,7 @@ import { User } from '../../domain/entity/UserInterface';
 import { UserRepositoryInterface } from '../../domain/repository/UserRepository';
 import { DeleteUserInterface } from '../../domain/useCases/User/deleteUser';
 
-export default class DeleteRecyclingPoint implements DeleteUserInterface  {
+export default class DeleteRecyclingPoint implements DeleteUserInterface {
   UserRepository: UserRepositoryInterface;
 
   constructor(UserRepository: UserRepositoryInterface) {

@@ -9,7 +9,7 @@ export default class FindAllCenterRequest implements FindAllCenterRequestInterfa
     this.CenterRequestRepository = CenterRequestRepository;
   }
 
-  async execute(): Promise<CenterRequest[]> {
+  async execute(): Promise<CenterRequest[] | undefined> {
     const result = await this.CenterRequestRepository.getAll();
     return result;
   }

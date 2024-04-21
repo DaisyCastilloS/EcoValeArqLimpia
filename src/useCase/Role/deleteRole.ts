@@ -2,7 +2,7 @@ import { Role } from '../../domain/entity/RoleInterface';
 import { RoleRepositoryInterface } from '../../domain/repository/RoleRepository';
 import { DeleteRoleInterface } from '../../domain/useCases/Role/deleteRole';
 
-export default class DeleteRecyclingPoint implements DeleteRoleInterface  {
+export default class DeleteRecyclingPoint implements DeleteRoleInterface {
   RoleRepository: RoleRepositoryInterface;
 
   constructor(RoleRepository: RoleRepositoryInterface) {

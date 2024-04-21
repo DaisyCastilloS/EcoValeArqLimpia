@@ -10,6 +10,6 @@ export default class UpdateAdmin implements UpdateAdminInterface {
   }
 
   async execute(AdminToUpdate: Admin): Promise<void> {
-    await this.adminRepository.update(AdminToUpdate);
+    await this.adminRepository.updateById(AdminToUpdate.id);
   }
 }

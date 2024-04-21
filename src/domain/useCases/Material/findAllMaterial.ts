@@ -1,6 +1,6 @@
 import { MaterialRecicled } from '../../entity/MaterialInterface';
 
 export interface FindAllMaterialRecicledInterface {
-  execute: (MaterialRecicledToFind: MaterialRecicled) => Promise<MaterialRecicled[]>
+  execute: (getAllMaterialRecicleds: MaterialRecicled) => Promise<MaterialRecicled[] | undefined>
 
 }

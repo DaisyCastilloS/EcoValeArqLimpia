@@ -1,5 +1,5 @@
 import { RecyclingPoint } from '../../entity/PointsInterface';
 
 export interface FindAllRecyclingPointInterface {
-  execute: (RecyclingPointToFind: RecyclingPoint) => Promise<RecyclingPoint[]>
+  execute: (GetAllRecyclingPoints: RecyclingPoint) => Promise<RecyclingPoint[] | undefined>
 }

@@ -2,7 +2,7 @@ import { Ticket } from '../../domain/entity/TicketInterface';
 import { TicketRepositoryInterface } from '../../domain/repository/TicketRepository';
 import { FindByIdTicketInterface } from '../../domain/useCases/Ticket/findByIdTicket';
 
-export default class DeleteRecyclingPoint implements FindByIdTicketInterface  {
+export default class DeleteRecyclingPoint implements FindByIdTicketInterface {
   TicketRepository: TicketRepositoryInterface;
 
   constructor(TicketRepository: TicketRepositoryInterface) {

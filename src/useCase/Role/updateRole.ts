@@ -2,7 +2,7 @@ import { Role } from '../../domain/entity/RoleInterface';
 import { RoleRepositoryInterface } from '../../domain/repository/RoleRepository';
 import { UpdateRoleInterface } from '../../domain/useCases/Role/updateRole';
 
-export default class SaveRole implements UpdateRoleInterface  {
+export default class SaveRole implements UpdateRoleInterface {
   RoleRepository: RoleRepositoryInterface;
 
   constructor(RoleRepository: RoleRepositoryInterface) {

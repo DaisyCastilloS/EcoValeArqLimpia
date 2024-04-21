@@ -9,7 +9,7 @@ export default class DeleteRecyclingCompany implements FindAllRecyclingCompanyIn
     this.RecyclingCompanyRepository = RecyclingCompanyRepository;
   }
 
-  async execute(): Promise<RecyclingCompany[]> {
+  async execute(): Promise<RecyclingCompany[] | undefined> {
     const result = await this.RecyclingCompanyRepository.getAll();
     return result;
   }

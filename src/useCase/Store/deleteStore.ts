@@ -2,7 +2,7 @@ import { Store } from '../../domain/entity/StoreInterface';
 import { StoreRepositoryInterface } from '../../domain/repository/StoreRepository';
 import { DeleteStoreInterface } from '../../domain/useCases/Store/deleteStore';
 
-export default class DeleteRecyclingPoint implements DeleteStoreInterface  {
+export default class DeleteRecyclingPoint implements DeleteStoreInterface {
   StoreRepository: StoreRepositoryInterface;
 
   constructor(StoreRepository: StoreRepositoryInterface) {
@@ -14,4 +14,3 @@ export default class DeleteRecyclingPoint implements DeleteStoreInterface  {
     return result;
   }
 }
-

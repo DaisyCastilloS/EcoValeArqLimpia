@@ -9,7 +9,7 @@ export default class DeleteMaterialRecicled implements FindAllMaterialRecicledIn
     this.MaterialRecicledRepository = MaterialRecicledRepository;
   }
 
-  async execute(): Promise<MaterialRecicled[]> {
+  async execute(): Promise<MaterialRecicled[] | undefined> {
     const result = await this.MaterialRecicledRepository.getAll();
     return result;
   }

@@ -2,7 +2,7 @@ import { Ticket } from '../../domain/entity/TicketInterface';
 import { TicketRepositoryInterface } from '../../domain/repository/TicketRepository';
 import { UpdateTicketInterface } from '../../domain/useCases/Ticket/updateTicket';
 
-export default class DeleteRecyclingPoint implements UpdateTicketInterface  {
+export default class DeleteRecyclingPoint implements UpdateTicketInterface {
   TicketRepository: TicketRepositoryInterface;
 
   constructor(TicketRepository: TicketRepositoryInterface) {
@@ -10,7 +10,7 @@ export default class DeleteRecyclingPoint implements UpdateTicketInterface  {
   }
 
   async execute(TicketToUpdate: Ticket): Promise<void> {
-    const result = await this.TicketRepository.update(TicketToUpdate);
+    const result = await this.TicketRepository.updateById(TicketToUpdate.id);
     return result;
   }
 }

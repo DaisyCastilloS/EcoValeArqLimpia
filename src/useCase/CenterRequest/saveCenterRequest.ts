@@ -9,8 +9,8 @@ export default class SaveCenterRequest implements SaveCenterRequestInterface {
     this.CenterRequestRepository = centerRequestRepository;
   }
 
-  async execute(CenterRequestToSave: CenterRequest): Promise<void> {
-    const result = await this.CenterRequestRepository.save(CenterRequestToSave);
+  async execute(centerRequest: CenterRequest): Promise<void> {
+    const result = await this.CenterRequestRepository.save(centerRequest);
     return result;
   }
 }

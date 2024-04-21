@@ -1,5 +1,5 @@
 import { Admin } from '../../entity/AdminInterface';
 
 export interface SaveAdminInterface {
-  execute: (AdminToSave: Admin) => Promise<void>
+  execute: (admin: Admin) => Promise<void>
 }
