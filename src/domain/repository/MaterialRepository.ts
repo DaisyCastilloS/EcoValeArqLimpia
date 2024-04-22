@@ -2,7 +2,7 @@ import { MaterialRecicled } from '../entity/MaterialInterface';
 
 export interface MaterialRecicledRepositoryInterface {
   // Guarda un objeto MaterialRecicled en el repositorio
-  save: (materialRecicled: MaterialRecicled) => Promise<void>;
+  save: (modality: MaterialRecicled) => Promise<void>;
 
   // Encuentra un objeto MaterialRecicled por su ID
   findById: (id: string) => Promise<MaterialRecicled | undefined>;
@@ -17,7 +17,7 @@ export interface MaterialRecicledRepositoryInterface {
   deleteById: (id: string) => Promise<void>;
 
   // Obtiene todos los MaterialRecicleds en el repositorio
-  getAll: () => Promise<MaterialRecicled[]>;
+  getAll: () => Promise<MaterialRecicled[] | []>;
 
   // Obtiene la cantidad total de MaterialRecicleds en el repositorio
   getCount: () => Promise<number>;

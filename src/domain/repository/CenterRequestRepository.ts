@@ -2,10 +2,10 @@ import { CenterRequest } from '../entity/CenterRequestInterface';
 
 export interface CenterRequestRepositoryInterface {
   // Guarda un objeto CenterRequest en el repositorio
-  save: (centerRequest: CenterRequest) => Promise<void>;
+  save: (modality: CenterRequest) => Promise<void>;
 
   // Encuentra un objeto CenterRequest por su ID
-  findById: (id: string) => Promise<CenterRequest>;
+  findById: (id: string) => Promise<CenterRequest | undefined>;
 
   // Encuentra una lista de CenterRequests por su nombre (puede devolver una lista vacía)
   findByName: (name: string) => Promise<CenterRequest[]>;
@@ -17,7 +17,7 @@ export interface CenterRequestRepositoryInterface {
   deleteById: (id: string) => Promise<void>;
 
   // Obtiene todos los CenterRequests en el repositorio
-  getAll: () => Promise<CenterRequest[]>;
+  getAll: () => Promise<CenterRequest[] | []>;
 
   // Obtiene la cantidad total de CenterRequests en el repositorio
   getCount: () => Promise<number>;

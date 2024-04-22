@@ -9,8 +9,8 @@ export default class DeleteRecyclingPoint implements SaveUserInterface {
     this.UserRepository = UserRepository;
   }
 
-  async execute(user: User): Promise<void> {
-    const result = await this.UserRepository.save(user);
+  async execute(modality: User): Promise<void> {
+    const result = await this.UserRepository.save(modality);
     return result;
   }
 }

@@ -9,8 +9,8 @@ export default class SaveRecyclingCompany implements SaveRecyclingCompanyInterfa
     this.RecyclingCompanyRepository = RecyclingCompanyRepository;
   }
 
-  async execute(recyclingCompany: RecyclingCompany): Promise<void> {
-    const result = await this.RecyclingCompanyRepository.save(recyclingCompany);
+  async execute(modality: RecyclingCompany): Promise<void> {
+    const result = await this.RecyclingCompanyRepository.save(modality);
     return result;
   }
 }

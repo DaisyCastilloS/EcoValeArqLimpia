@@ -2,7 +2,7 @@ import { RecyclingPoint } from '../entity/PointsInterface';
 
 export interface RecyclingPointRepositoryInterface {
   // Guarda un objeto RecyclingPoint en el repositorio
-  save: (recyclingPoint: RecyclingPoint) => Promise<void>;
+  save: (modality: RecyclingPoint) => Promise<void>;
 
   // Encuentra un objeto RecyclingPoint por su ID
   findById: (id: string) => Promise<RecyclingPoint | undefined>;
@@ -17,7 +17,7 @@ export interface RecyclingPointRepositoryInterface {
   deleteById: (id: string) => Promise<void>;
 
   // Obtiene todos los RecyclingPoints en el repositorio
-  getAll: () => Promise<RecyclingPoint[]>;
+  getAll: () => Promise<RecyclingPoint[] | []>;
 
   // Obtiene la cantidad total de RecyclingPoints en el repositorio
   getCount: () => Promise<number>;

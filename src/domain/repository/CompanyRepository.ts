@@ -2,10 +2,10 @@ import { RecyclingCompany } from '../entity/CompanyInterface';
 
 export interface RecyclingCompanyRepositoryInterface {
   // Guarda un objeto RecyclingCompany en el repositorio
-  save: (recyclingCompany: RecyclingCompany) => Promise<void>;
+  save: (modality: RecyclingCompany) => Promise<void>;
 
   // Encuentra un objeto RecyclingCompany por su ID
-  findById: (id: string) => Promise<RecyclingCompany>;
+  findById: (id: string) => Promise<RecyclingCompany | undefined>;
 
   // Encuentra una lista de RecyclingCompanys por su nombre (puede devolver una lista vacía)
   findByName: (name: string) => Promise<RecyclingCompany[]>;
@@ -17,7 +17,7 @@ export interface RecyclingCompanyRepositoryInterface {
   deleteById: (id: string) => Promise<void>;
 
   // Obtiene todos los RecyclingCompanys en el repositorio
-  getAll: () => Promise<RecyclingCompany[]>;
+  getAll: () => Promise<RecyclingCompany[] | []>;
 
   // Obtiene la cantidad total de RecyclingCompanys en el repositorio
   getCount: () => Promise<number>;

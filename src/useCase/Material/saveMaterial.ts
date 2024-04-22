@@ -9,8 +9,8 @@ export default class DeleteMaterialRecicled implements SaveMaterialRecicledInter
     this.MaterialRecicledRepository = MaterialRecicledRepository;
   }
 
-  async execute(materialRecicled: MaterialRecicled): Promise<void> {
-    const result = await this.MaterialRecicledRepository.save(materialRecicled);
+  async execute(modality: MaterialRecicled): Promise<void> {
+    const result = await this.MaterialRecicledRepository.save(modality);
     return result;
   }
 }

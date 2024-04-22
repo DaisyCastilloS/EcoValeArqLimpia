@@ -9,8 +9,8 @@ export default class DeleteRecyclingPoint implements SaveStoreInterface {
     this.StoreRepository = StoreRepository;
   }
 
-  async execute(store: Store): Promise<void> {
-    const result = await this.StoreRepository.save(store);
+  async execute(modality: Store): Promise<void> {
+    const result = await this.StoreRepository.save(modality);
     return result;
   }
 }

@@ -9,8 +9,8 @@ export default class SaveRole implements SaveRoleInterface {
     this.RoleRepository = RoleRepository;
   }
 
-  async execute(role: Role): Promise<void> {
-    const result = await this.RoleRepository.save(role);
+  async execute(modality: Role): Promise<void> {
+    const result = await this.RoleRepository.save(modality);
     return result;
   }
 }

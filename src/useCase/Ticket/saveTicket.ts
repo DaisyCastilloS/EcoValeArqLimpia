@@ -9,8 +9,8 @@ export default class DeleteRecyclingPoint implements SaveTicketInterface {
     this.TicketRepository = TicketRepository;
   }
 
-  async execute(ticket: Ticket): Promise<void> {
-    const result = await this.TicketRepository.save(ticket);
+  async execute(modality: Ticket): Promise<void> {
+    const result = await this.TicketRepository.save(modality);
     return result;
   }
 }

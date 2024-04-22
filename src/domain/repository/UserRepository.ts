@@ -2,7 +2,7 @@ import { User } from '../entity/UserInterface';
 
 export interface UserRepositoryInterface {
   // Guarda un objeto User en el repositorio
-  save: (user: User) => Promise<void>;
+  save: (modality: User) => Promise<void>;
 
   // Encuentra un objeto User por su ID
   findById: (id: string) => Promise<User | undefined>;
@@ -10,14 +10,14 @@ export interface UserRepositoryInterface {
   // Encuentra una lista de Users por su nombre (puede devolver una lista vacía)
   findByName: (name: string) => Promise<User[]>;
 
-  // Actualiza un objeto User en el repositorio por su ID
-  updateById: (id: string) => Promise<void>;
+  // a traves del id, podra actualizar email y contraseña
+  updateById: (id: string, newEmail:string, newPassword:string) => Promise<void>;
 
   // Elimina un objeto User por su ID
   deleteById: (id: string) => Promise<void>;
 
   // Obtiene todos los Users en el repositorio
-  getAll: () => Promise<User[]>;
+  getAll: () => Promise<User[] | []>;
 
   // Obtiene la cantidad total de Users en el repositorio
   getCount: () => Promise<number>;

@@ -8,16 +8,17 @@ export interface AdminRepositoryInterface {
   findById: (id: string) => Promise<Admin | undefined>;
 
   // Encuentra una lista de Admins por su nombre (puede devolver una lista vacía)
-  findByName: (name: string) => Promise<Admin[]>;
+  findByName: (nombre: string) => Promise<Admin[]>;
 
-  // Actualiza un objeto Admin en el repositorio por su ID
-  updateById: (id: string) => Promise<void>;
+  // como es admin, a traves de la id puede actualizar cualquiera de los campos
+  // por eso el partial admin
+  updateById(id: string, updatedFields: Partial<Admin>): Promise<void>
 
   // Elimina un objeto Admin por su ID
   deleteById: (id: string) => Promise<void>;
 
   // Obtiene todos los Admins en el repositorio
-  getAll: () => Promise<Admin[] | undefined>;
+  getAll: () => Promise<Admin[] | []>;
 
   // Obtiene la cantidad total de Admins en el repositorio
   getCount: () => Promise<number>;
@@ -36,5 +37,5 @@ export interface AdminRepositoryInterface {
     sortOrder?: 'asc' | 'desc';
   }) => Promise<{ Admins: Admin[]; total: number }>;
 
-  // Otros métodos del repositorio pueden ser agregados aquí según sea necesario
+  findByDate(date: string): Promise<Admin[] | []>
 }

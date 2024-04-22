@@ -7,4 +7,6 @@ export interface CenterRequest {
   fecha_recoleccion: Date
   hora_recoleccion: Date
   estadoSolicitud: string
+  createdAt: Date
+  updatedAt: Date
 }

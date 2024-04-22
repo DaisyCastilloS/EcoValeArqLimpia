@@ -9,8 +9,8 @@ export default class FindAllVouchers implements SaveVoucherInterface {
     this.VoucherRepository = VoucherRepository;
   }
 
-  async execute(voucher: Voucher): Promise<void> {
-    const result = await this.VoucherRepository.save(voucher);
+  async execute(modality: Voucher): Promise<void> {
+    const result = await this.VoucherRepository.save(modality);
     return result;
   }
 }
