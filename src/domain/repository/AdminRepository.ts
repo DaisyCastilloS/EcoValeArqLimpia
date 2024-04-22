@@ -7,6 +7,7 @@ export interface AdminRepositoryInterface {
   // Encuentra un objeto Admin por su ID
   findById: (id: string) => Promise<Admin | undefined>;
 
+  findByDate(date: string): Promise<Admin[] | []>
   // Encuentra una lista de Admins por su nombre (puede devolver una lista vacía)
   findByName: (nombre: string) => Promise<Admin[]>;
 
@@ -36,6 +37,4 @@ export interface AdminRepositoryInterface {
     sortBy?: string;
     sortOrder?: 'asc' | 'desc';
   }) => Promise<{ Admins: Admin[]; total: number }>;
-
-  findByDate(date: string): Promise<Admin[] | []>
 }

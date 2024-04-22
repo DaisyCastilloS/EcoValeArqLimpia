@@ -59,7 +59,3 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
     return result;
   }
 }
-
-// update admin en veremos, definir si va a ser admin del sitio o el usuario empresa, si es el de empresa solo actualizar emai pasword,empresas,createdat,updatedat
-
-// si es admin, puede actualizar todo
