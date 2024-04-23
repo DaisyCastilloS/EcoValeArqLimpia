@@ -2,7 +2,7 @@ import { CenterRequest } from '../domain/entity/CenterRequestInterface';
 import { CenterRequestServiceInterface } from './interfaces/CenterRequestService';
 import { SQLDatabaseWrapperInterface } from './interfaces/SQLDatabaseWrapper';
 
-const DB_TABLE = 'Admin';
+const DB_TABLE = 'center';
 export default class PGDataSourceServiceCenterRequest implements CenterRequestServiceInterface {
   db: SQLDatabaseWrapperInterface;
 
@@ -29,27 +29,71 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
     return result[0];
   }
 
-  async updateById(id: string): Promise<void> {
-    const dbResponse = await this.db.query(`UPDATE ${DB_TABLE}
-    SET
-        id = $1,
-        usuario = $2,
-        materialaRecolectar = $3,
-        ubicacionRecoleccion = $4,
-        fecha_recoleccion = $5,
-        createdAt = $6,
-        updatedAt = $7,
-    WHERE id = $1;
-`, [id]);
-    const result = dbResponse.rows.map((item) => ({
-      id: item.id,
-      usuario: item.usuario,
-      materialaRecolectar: item.materialaRecolectar,
-      ubicacionRecoleccion: item.ubicacionRecoleccion,
-      estadoSolicitud: item.estadoSolicitud,
-      createdAt: item.createdAt,
-      updatedAt: item.updatedAt,
+  //actualizar campo materialarecolectar usando la id desde el front 
+  async updateById(id: string, newMaterial: string): Promise<void> {
+    try {
+      const query = `
+        UPDATE
+          ${DB_TABLE}
+        SET
+          materialaRecolectar = $1,
+          updatedAt = NOW() -- Actualiza el campo updatedAt con la fecha y hora actual
+        WHERE
+          id = $2;`; // Filtra la actualización por la id proporcionada
+
+      await this.db.query(query, [newMaterial, id]); // Ejecuta la consulta SQL con los parámetros
+
+    } catch (error) {
+      throw new Error(`Error al actualizar por ID (${id}): ${error.message}`);
+    }
+  }
+
+  //buscr por materialaRecolectar 
+  async findByName(materialaRecolectar: string): Promise<CenterRequest[]> {
+    try {
+      const query = `
+        SELECT
+          id,
+          usuario,
+          materialaRecolectar,
+          ubicacionRecoleccion,
+          estadoSolicitud,
+          createdAt,
+          updatedAt
+        FROM
+          ${DB_TABLE}
+        WHERE
+        materialaRecolectar = $1;`;
+      const dbResponse = await this.db.query(query, [materialaRecolectar]);
+      const result: CenterRequest[] = dbResponse.rows.map((item) => ({
+        id: item.id,
+        usuario: item.usuario,
+        materialaRecolectar: item.materialaRecolectar,
+        ubicacionRecoleccion: item.ubicacionRecoleccion,
+        estadoSolicitud: item.estadoSolicitud,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+      }));
+
+      return result;
+    } catch (error) {
+      throw new Error(`Error al buscar por materialaRecolectar (${materialaRecolectar}): ${error.message}`);
+    }
+  }
+
+  async getAll(): Promise<CenterRequest[] | undefined> {
+    const dbResponse = await this.db.query(
+      `SELECT id, usuario, materialaRecolectar, ubicacionRecoleccion, estadoSolicitud, createdAt, updatedA
+     FROM ${DB_TABLE};`,
+    );
+    const centers = dbResponse.rows.map((center) => ({
+      ...center,
+      createdAt: center.createdAt.toISOString(), // Formatear la fecha si es necesario
+      updatedAt: center.updatedAt.toISOString(),
     }));
-    return result;
+    return centers;
   }
 }
+
+
+

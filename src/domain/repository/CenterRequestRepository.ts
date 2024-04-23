@@ -7,17 +7,19 @@ export interface CenterRequestRepositoryInterface {
   // Encuentra un objeto CenterRequest por su ID
   findById: (id: string) => Promise<CenterRequest | undefined>;
 
-  // Encuentra una lista de CenterRequests por su nombre (puede devolver una lista vacía)
-  findByName: (name: string) => Promise<CenterRequest[]>;
-
   // Actualiza un objeto CenterRequest en el repositorio por su ID
-  updateById: (id: string) => Promise<void>;
+  updateById: (id: string, newMaterial: string) => Promise<void>;
+
+  // Encuentra una lista de CenterRequests por el materialarecolectar (puede devolver una lista vacía)
+  findByName: (materialaRecolectar: string) => Promise<CenterRequest[]>;
 
   // Elimina un objeto CenterRequest por su ID
   deleteById: (id: string) => Promise<void>;
 
   // Obtiene todos los CenterRequests en el repositorio
   getAll: () => Promise<CenterRequest[] | []>;
+
+  findByDate(date: string): Promise<CenterRequest[] | []>;
 
   // Obtiene la cantidad total de CenterRequests en el repositorio
   getCount: () => Promise<number>;
