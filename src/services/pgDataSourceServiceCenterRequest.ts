@@ -11,7 +11,7 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
   }
 
   async save(centerRequest: CenterRequest): Promise<void> {
-    await this.db.query(`insert into ${DB_TABLE} (id,usuario,materialaRecolectar,ubicacionRecoleccion,fecha_recoleccion,hora_recoleccion, estadoSolicitud,createdAt,updatedAt) values ($1,$2,$3,$4,$5,$6,$7,$8,$9);`, [centerRequest.id, centerRequest.usuario, centerRequest.materialaRecolectar, centerRequest.ubicacionRecoleccion, centerRequest.fecha_recoleccion, centerRequest.hora_recoleccion, centerRequest.estadoSolicitud, centerRequest.createdAt, centerRequest.updatedAt]);
+    await this.db.query(`insert into ${DB_TABLE} (id,usuario,materialaRecolectar,ubicacionRecoleccion,fecha_recoleccion,hora_recoleccion, estadoSolicitud,createdAt,updatedAt) values ($1,$2,$3,$4,$5,$6,$7,$8,$9);`, [centerRequest.id, centerRequest.usuario, centerRequest.materialaRecolectar, centerRequest.ubicacionRecoleccion, centerRequest.estadoSolicitud, centerRequest.createdAt, centerRequest.updatedAt]);
   }
 
   async findById(id: string): Promise<CenterRequest | undefined> {
@@ -21,8 +21,6 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
       usuario: item.usuario,
       materialaRecolectar: item.materialaRecolectar,
       ubicacionRecoleccion: item.ubicacionRecoleccion,
-      fecha_recoleccion: item.fecha_recoleccion,
-      hora_recoleccion: item.hora_recoleccion,
       estadoSolicitud: item.estadoSolicitud,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
@@ -39,10 +37,8 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
         materialaRecolectar = $3,
         ubicacionRecoleccion = $4,
         fecha_recoleccion = $5,
-        hora_recoleccion = $6,
-        estadoSolicitud = $7,
-        createdAt = $8,
-        updatedAt = $9,
+        createdAt = $6,
+        updatedAt = $7,
     WHERE id = $1;
 `, [id]);
     const result = dbResponse.rows.map((item) => ({
@@ -50,8 +46,6 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
       usuario: item.usuario,
       materialaRecolectar: item.materialaRecolectar,
       ubicacionRecoleccion: item.ubicacionRecoleccion,
-      fecha_recoleccion: item.fecha_recoleccion,
-      hora_recoleccion: item.hora_recoleccion,
       estadoSolicitud: item.estadoSolicitud,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
