@@ -93,6 +93,93 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
     }));
     return centers;
   }
+
+  async findByDate(date: string): Promise<CenterRequest[] | []> {
+    try {
+      const query = `
+        SELECT
+          id,
+          usuario,
+          materialaRecolectar,
+          ubicacionRecoleccion,
+          estadoSolicitud,
+          createdAt,
+          updatedAt
+        FROM
+          ${DB_TABLE}
+        WHERE
+          DATE(createdAt) = $1;`; // Filtra por la fecha de creación (createdAt)
+
+      const dbResponse = await this.db.query(query, [date]);
+      const centerRequests: CenterRequest[] = dbResponse.rows.map((row) => ({
+        id: row.id,
+        usuario: row.usuario,
+        materialaRecolectar: row.materialaRecolectar,
+        ubicacionRecoleccion: row.ubicacionRecoleccion,
+        estadoSolicitud: row.estadoSolicitud,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
+      }));
+
+      return centerRequests;
+    } catch (error) {
+      throw new Error(`Error al buscar por fecha (${date}): ${error.message}`);
+    }
+  }
+
+  //cantidad total de centerrequest 
+  async getCount(): Promise<number> {
+    try {
+      const query = `
+        SELECT
+          COUNT(*)
+        FROM
+          ${DB_TABLE};`;
+
+      const dbResponse = await this.db.query(query);
+      const count = parseInt(dbResponse.rows[0].count, 10); // Parsea el resultado a un número entero
+
+      return count;
+    } catch (error) {
+      throw new Error(`Error al obtener el conteo de registros: ${error.message}`);
+    }
+  }
+
+  async deleteById(id: string): Promise<void> {
+    try {
+      const query = `
+        DELETE FROM
+          ${DB_TABLE}
+        WHERE
+          id = $1;`; // Filtra la eliminación por la id proporcionada
+
+      await this.db.query(query, [id]); // Ejecuta la consulta SQL con el parámetro de ID
+
+    } catch (error) {
+      throw new Error(`Error al eliminar por ID (${id}): ${error.message}`);
+    }
+  }
+
+  async existsById(id: string): Promise<boolean> {
+    try {
+      const query = `
+        SELECT
+          EXISTS (
+            SELECT 1
+            FROM ${DB_TABLE}
+            WHERE id = $1
+          );`;
+
+      const dbResponse = await this.db.query(query, [id]);
+      const exists = dbResponse.rows[0].exists;
+
+      return exists;
+    } catch (error) {
+      throw new Error(`Error al verificar existencia por ID (${id}): ${error.message}`);
+    }
+  }
+
+  
 }
 
 

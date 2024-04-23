@@ -13,17 +13,19 @@ export interface CenterRequestRepositoryInterface {
   // Encuentra una lista de CenterRequests por el materialarecolectar (puede devolver una lista vacía)
   findByName: (materialaRecolectar: string) => Promise<CenterRequest[]>;
 
-  // Elimina un objeto CenterRequest por su ID
-  deleteById: (id: string) => Promise<void>;
+ 
 
   // Obtiene todos los CenterRequests en el repositorio
-  getAll: () => Promise<CenterRequest[] | []>;
+  getAll: () => Promise<CenterRequest[] | undefined>;
 
   findByDate(date: string): Promise<CenterRequest[] | []>;
 
   // Obtiene la cantidad total de CenterRequests en el repositorio
   getCount: () => Promise<number>;
 
+   // Elimina un objeto CenterRequest por su ID
+   deleteById: (id: string) => Promise<void>;
+   
   // Verifica si existe un CenterRequest con el ID dado
   existsById: (id: string) => Promise<boolean>;
 
