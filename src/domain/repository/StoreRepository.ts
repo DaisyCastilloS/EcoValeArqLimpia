@@ -1,6 +1,10 @@
 import { Store } from '../entity/StoreInterface';
 
 export interface StoreRepositoryInterface {
+
+  // Obtiene todos los Stores en el repositorio
+  getAll: () => Promise<Store[] | undefined>;
+
   // Guarda un objeto Store en el repositorio
   save: (modality: Store) => Promise<void>;
 
@@ -16,8 +20,7 @@ export interface StoreRepositoryInterface {
   // Elimina un objeto Store por su ID
   deleteById: (id: string) => Promise<void>;
 
-  // Obtiene todos los Stores en el repositorio
-  getAll: () => Promise<Store[] | []>;
+
 
   // Obtiene la cantidad total de Stores en el repositorio
   getCount: () => Promise<number>;

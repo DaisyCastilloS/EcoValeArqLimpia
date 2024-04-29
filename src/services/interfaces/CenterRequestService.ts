@@ -4,7 +4,7 @@ export interface CenterRequestServiceInterface {
   getAll: () => Promise<CenterRequest[] | undefined>;
   save(modality: CenterRequest): Promise<void>;
   findById(id: string): Promise<CenterRequest | undefined>;
-  findByName: (name: string) => Promise<CenterRequest[]>;
+  findByName: (materialaRecolectar: string) => Promise<CenterRequest[]>;
   updateById: (id: string, newMaterial: string) => Promise<void>;
   deleteById: (id: string) => Promise<void>;
   findByDate(date: string): Promise<CenterRequest[] | []>;

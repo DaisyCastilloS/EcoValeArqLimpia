@@ -1,6 +1,11 @@
 import { Ticket } from '../entity/TicketInterface';
 
 export interface TicketRepositoryInterface {
+
+  // Obtiene todos los Tickets en el repositorio
+  getAll: () => Promise<Ticket[] | undefined>;
+
+
   // Guarda un objeto Ticket en el repositorio
   save: (modality: Ticket) => Promise<void>;
 
@@ -16,8 +21,7 @@ export interface TicketRepositoryInterface {
   // Elimina un objeto Ticket por su ID
   deleteById: (id: string) => Promise<void>;
 
-  // Obtiene todos los Tickets en el repositorio
-  getAll: () => Promise<Ticket[] | []>;
+
 
   // Obtiene la cantidad total de Tickets en el repositorio
   getCount: () => Promise<number>;

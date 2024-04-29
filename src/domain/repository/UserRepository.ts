@@ -1,6 +1,11 @@
 import { User } from '../entity/UserInterface';
 
 export interface UserRepositoryInterface {
+
+  // Obtiene todos los Users en el repositorio
+  getAll: () => Promise<User[] | undefined>;
+
+
   // Guarda un objeto User en el repositorio
   save: (modality: User) => Promise<void>;
 
@@ -16,8 +21,7 @@ export interface UserRepositoryInterface {
   // Elimina un objeto User por su ID
   deleteById: (id: string) => Promise<void>;
 
-  // Obtiene todos los Users en el repositorio
-  getAll: () => Promise<User[] | []>;
+  findByDate(date: string): Promise<User[] | []>;
 
   // Obtiene la cantidad total de Users en el repositorio
   getCount: () => Promise<number>;

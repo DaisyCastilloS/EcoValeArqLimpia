@@ -1,6 +1,10 @@
 import { Voucher } from '../entity/VoucherInterface';
 
 export interface VoucherRepositoryInterface {
+  // Obtiene todos los Vouchers en el repositorio
+  getAll: () => Promise<Voucher[] | undefined>;
+
+
   // Guarda un objeto Voucher en el repositorio
   save: (modality: Voucher) => Promise<void>;
 
@@ -16,8 +20,7 @@ export interface VoucherRepositoryInterface {
   // Elimina un objeto Voucher por su ID
   deleteById: (id: string) => Promise<void>;
 
-  // Obtiene todos los Vouchers en el repositorio
-  getAll: () => Promise<Voucher[] | []>;
+  findByDate(date: string): Promise<Voucher[] | []>;
 
   // Obtiene la cantidad total de Vouchers en el repositorio
   getCount: () => Promise<number>;
