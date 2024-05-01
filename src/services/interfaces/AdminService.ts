@@ -9,8 +9,6 @@ export interface AdminServiceInterface {
   deleteById: (id: string) => Promise<void>;
   findByDate(date: string): Promise<Admin[] | []>;
   getCount: () => Promise<number>;
-  existsById: (id: string) => Promise<boolean>;
-  findByCriteria: (criteria: any) => Promise<Admin[]>;
   findPaginated: (options: {
     page: number;
     pageSize: number;

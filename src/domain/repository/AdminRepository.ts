@@ -27,12 +27,6 @@ export interface AdminRepositoryInterface {
   // Obtiene la cantidad total de Admins en el repositorio
   getCount: () => Promise<number>;
 
-  // Verifica si existe un Admin con el ID dado
-  existsById: (id: string) => Promise<boolean>;
-
-  // Busca Admins por criterios específicos, como filtros avanzados
-  findByCriteria: (criteria: any) => Promise<Admin[]>;
-
   // Realiza operaciones avanzadas de paginación y ordenamiento
   findPaginated: (options: {
     page: number;

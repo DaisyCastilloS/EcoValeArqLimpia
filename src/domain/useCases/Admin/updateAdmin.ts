@@ -1,5 +1,5 @@
 import { Admin } from '../../entity/AdminInterface';
 
 export interface UpdateAdminInterface {
-  execute: (AdminToUpdate: Admin) => Promise<void>
+  execute: (id: string, updatedFields: Partial<Admin>) => Promise<void>
 }
