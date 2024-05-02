@@ -7,11 +7,12 @@ export interface CenterRequestRepositoryInterface {
   // Guarda un objeto CenterRequest en el repositorio
   save: (modality: CenterRequest) => Promise<void>;
 
-  // Encuentra un objeto CenterRequest por su ID
-  findById: (id: string) => Promise<CenterRequest | undefined>;
+  // con la id, que devuelva materialarecolectar
+  findByIdmaterial(id: string): Promise<{ materialaRecolectar: string;} | undefined>;
+  
+   // con la id, que devuelva la ubicaciondel centro de recoleccion
+  findByIdubicacion(id: string): Promise<{ ubicacionRecoleccion: string;} | undefined>;
 
-  // Encuentra una lista de CenterRequests por el materialarecolectar (puede devolver una lista vacía)
-  findByName: (materialaRecolectar: string) => Promise<CenterRequest[]>;
 
   // Actualiza un objeto CenterRequest en el repositorio por su ID
   updateById: (id: string, newMaterial: string) => Promise<void>;
@@ -24,11 +25,7 @@ export interface CenterRequestRepositoryInterface {
   // Obtiene la cantidad total de CenterRequests en el repositorio
   getCount: () => Promise<number>;
 
-  // Verifica si existe un CenterRequest con el ID dado
-  existsById: (id: string) => Promise<boolean>;
 
-  // Busca CenterRequests por criterios específicos, como filtros avanzados
-  findByCriteria: (criteria: any) => Promise<CenterRequest[]>;
 
   // Realiza operaciones avanzadas de paginación y ordenamiento
   findPaginated: (options: {

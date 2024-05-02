@@ -3,14 +3,13 @@ import { CenterRequest } from '../../domain/entity/CenterRequestInterface';
 export interface CenterRequestServiceInterface {
   getAll: () => Promise<CenterRequest[] | undefined>;
   save(modality: CenterRequest): Promise<void>;
-  findById(id: string): Promise<CenterRequest | undefined>;
-  findByName: (materialaRecolectar: string) => Promise<CenterRequest[]>;
+  findByIdmaterial(id: string): Promise<{ materialaRecolectar: string;} | undefined>;
+  findByIdubicacion(id: string): Promise<{ ubicacionRecoleccion: string;} | undefined>;
   updateById: (id: string, newMaterial: string) => Promise<void>;
   deleteById: (id: string) => Promise<void>;
   findByDate(date: string): Promise<CenterRequest[] | []>;
   getCount: () => Promise<number>;
-  existsById: (id: string) => Promise<boolean>;
-  findByCriteria: (criteria: any) => Promise<CenterRequest[]>;
+
   findPaginated: (options: {
     page: number;
     pageSize: number;

@@ -2,7 +2,7 @@ import { CenterRequest } from '../domain/entity/CenterRequestInterface';
 import { CenterRequestServiceInterface } from './interfaces/CenterRequestService';
 import { SQLDatabaseWrapperInterface } from './interfaces/SQLDatabaseWrapper';
 
-const DB_TABLE = 'center';
+const DB_TABLE = 'center_requests';
 export default class PGDataSourceServiceCenterRequest implements CenterRequestServiceInterface {
   db: SQLDatabaseWrapperInterface;
 
@@ -14,72 +14,26 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
     await this.db.query(`insert into ${DB_TABLE} (id,usuario,materialaRecolectar,ubicacionRecoleccion,fecha_recoleccion,hora_recoleccion, estadoSolicitud,createdAt,updatedAt) values ($1,$2,$3,$4,$5,$6,$7,$8,$9);`, [centerRequest.id, centerRequest.usuario, centerRequest.materialaRecolectar, centerRequest.ubicacionRecoleccion, centerRequest.estadoSolicitud, centerRequest.createdAt, centerRequest.updatedAt]);
   }
 
-  async findById(id: string): Promise<CenterRequest | undefined> {
-    const dbResponse = await this.db.query(`select id from ${DB_TABLE} where id = $1 limit 1;`, [id]);
-    const result = dbResponse.rows.map((item) => ({
-      id: item.id,
-      usuario: item.usuario,
-      materialaRecolectar: item.materialaRecolectar,
-      ubicacionRecoleccion: item.ubicacionRecoleccion,
-      estadoSolicitud: item.estadoSolicitud,
-      createdAt: item.createdAt,
-      updatedAt: item.updatedAt,
-    }));
-
-    return result[0];
+  async findByIdmaterial(id: string): Promise<{ materialaRecolectar: string } | undefined> {
+    const dbResponse = 'SELECT materialaRecolectar FROM center_requests WHERE id = $1 LIMIT 1;';
+    const result = await this.db.query(dbResponse, [id]);
+    return result.rows[0];
   }
+
+  //a traves de la id, devuelve la ubicacion
+  async findByIdubicacion(id: string): Promise<{ ubicacionRecoleccion: string } | undefined> {
+    const query = 'SELECT ubicacionRecoleccion FROM center_requests WHERE id = $1 LIMIT 1;';
+    const result = await this.db.query(query, [id]);
+    return result.rows[0];
+  }
+
 
   //actualizar campo materialarecolectar usando la id desde el front 
   async updateById(id: string, newMaterial: string): Promise<void> {
-    try {
-      const query = `
-        UPDATE
-          ${DB_TABLE}
-        SET
-          materialaRecolectar = $1,
-          updatedAt = NOW() -- Actualiza el campo updatedAt con la fecha y hora actual
-        WHERE
-          id = $2;`; // Filtra la actualización por la id proporcionada
-
-      await this.db.query(query, [newMaterial, id]); // Ejecuta la consulta SQL con los parámetros
-
-    } catch (error) {
-      throw new Error(`Error al actualizar por ID (${id}): ${error.message}`);
-    }
+    const query = 'UPDATE center_requests SET materialaRecolectar = $1 WHERE id = $2;';
+    await this.db.query(query, [newMaterial, id]);
   }
 
-  //buscr por materialaRecolectar 
-  async findByName(materialaRecolectar: string): Promise<CenterRequest[]> {
-    try {
-      const query = `
-        SELECT
-          id,
-          usuario,
-          materialaRecolectar,
-          ubicacionRecoleccion,
-          estadoSolicitud,
-          createdAt,
-          updatedAt
-        FROM
-          ${DB_TABLE}
-        WHERE
-        materialaRecolectar = $1;`;
-      const dbResponse = await this.db.query(query, [materialaRecolectar]);
-      const result: CenterRequest[] = dbResponse.rows.map((item) => ({
-        id: item.id,
-        usuario: item.usuario,
-        materialaRecolectar: item.materialaRecolectar,
-        ubicacionRecoleccion: item.ubicacionRecoleccion,
-        estadoSolicitud: item.estadoSolicitud,
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt,
-      }));
-
-      return result;
-    } catch (error) {
-      throw new Error(`Error al buscar por materialaRecolectar (${materialaRecolectar}): ${error.message}`);
-    }
-  }
 
   async getAll(): Promise<CenterRequest[] | undefined> {
     const dbResponse = await this.db.query(
@@ -95,90 +49,54 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
   }
 
   async findByDate(date: string): Promise<CenterRequest[] | []> {
-    try {
-      const query = `
-        SELECT
-          id,
-          usuario,
-          materialaRecolectar,
-          ubicacionRecoleccion,
-          estadoSolicitud,
-          createdAt,
-          updatedAt
-        FROM
-          ${DB_TABLE}
-        WHERE
-          DATE(createdAt) = $1;`; // Filtra por la fecha de creación (createdAt)
-
-      const dbResponse = await this.db.query(query, [date]);
-      const centerRequests: CenterRequest[] = dbResponse.rows.map((row) => ({
-        id: row.id,
-        usuario: row.usuario,
-        materialaRecolectar: row.materialaRecolectar,
-        ubicacionRecoleccion: row.ubicacionRecoleccion,
-        estadoSolicitud: row.estadoSolicitud,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-      }));
-
-      return centerRequests;
-    } catch (error) {
-      throw new Error(`Error al buscar por fecha (${date}): ${error.message}`);
-    }
+    const dbResponse = await this.db.query(`SELECT extract(year from createdAt)||'-'||extract(month from createdAt)||'-'||extract(day from createdAt) as date 
+  FROM ${DB_TABLE} WHERE createdAt = $1 LIMIT 1;`, [date]);
+  const result = dbResponse.rows[0].date;
+  return result;
+  
   }
 
   //cantidad total de centerrequest 
   async getCount(): Promise<number> {
-    try {
-      const query = `
-        SELECT
-          COUNT(*)
-        FROM
-          ${DB_TABLE};`;
-
-      const dbResponse = await this.db.query(query);
-      const count = parseInt(dbResponse.rows[0].count, 10); // Parsea el resultado a un número entero
-
-      return count;
-    } catch (error) {
-      throw new Error(`Error al obtener el conteo de registros: ${error.message}`);
-    }
+    const dbResponse = await this.db.query(
+      `SELECT COUNT(*) AS count FROM ${DB_TABLE};`
+    );
+    const count = dbResponse.rows[0].count;
+    return parseInt(count);
   }
 
   async deleteById(id: string): Promise<void> {
-    try {
-      const query = `
-        DELETE FROM
-          ${DB_TABLE}
-        WHERE
-          id = $1;`; // Filtra la eliminación por la id proporcionada
-
-      await this.db.query(query, [id]); // Ejecuta la consulta SQL con el parámetro de ID
-
-    } catch (error) {
-      throw new Error(`Error al eliminar por ID (${id}): ${error.message}`);
-    }
+    const query = 'DELETE FROM center_requests WHERE id = $1;';
+    await this.db.query(query, [id]);
   }
 
-  async existsById(id: string): Promise<boolean> {
-    try {
-      const query = `
-        SELECT
-          EXISTS (
-            SELECT 1
-            FROM ${DB_TABLE}
-            WHERE id = $1
-          );`;
-
-      const dbResponse = await this.db.query(query, [id]);
-      const exists = dbResponse.rows[0].exists;
-
-      return exists;
-    } catch (error) {
-      throw new Error(`Error al verificar existencia por ID (${id}): ${error.message}`);
-    }
+  async findPaginated(options: {
+    page: number;
+    pageSize: number;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+  }): Promise<{ CenterRequests: CenterRequest[]; total: number }> {
+    const offset = (options.page - 1) * options.pageSize;
+    const sortOrder = options.sortOrder || 'asc';
+    const sortBy = options.sortBy || 'createdAt'; // Puedes cambiar el campo de ordenamiento predeterminado según tus necesidades
+  
+    // Consulta para obtener las filas de la página actual
+    const query = `
+      SELECT * FROM ${DB_TABLE}
+      ORDER BY ${sortBy} ${sortOrder}
+      LIMIT $1 OFFSET $2;
+    `;
+    const resultResponse = await this.db.query(query, [options.pageSize, offset]);
+    const centerRequests = resultResponse.rows;
+  
+    // Consulta para obtener el número total de filas
+    const countQuery = `SELECT COUNT(*) AS total FROM ${DB_TABLE};`;
+    const countResponse = await this.db.query(countQuery);
+    const total = parseInt(countResponse.rows[0].total);
+  
+    return { CenterRequests: centerRequests, total };
   }
-
+  
   
 }
 
