@@ -9,5 +9,6 @@ export interface RecyclingCompany {
   vouchers: string[]
   recycledMaterials: string[]
   recyclingPoints: string[]
+  createdAt?: Date
   updatedAt?: Date
 }

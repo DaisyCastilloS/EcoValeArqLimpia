@@ -2,30 +2,30 @@ import { RecyclingCompany } from '../entity/CompanyInterface';
 
 export interface RecyclingCompanyRepositoryInterface {
 
-  // Obtiene todos los RecyclingCompanys en el repositorio
+  // Obtiene todas las empresas en el repositorio
   getAll: () => Promise<RecyclingCompany[] | undefined>;
 
-  // Guarda un objeto RecyclingCompany en el repositorio
+  // Guarda un objeto empresa en el repositorio
   save: (modality: RecyclingCompany) => Promise<void>;
 
-  // Encuentra un objeto RecyclingCompany por su ID
+  // Encuentra un objeto empresa por su ID
   findById: (id: string) => Promise<RecyclingCompany | undefined>;
 
-  // Encuentra una lista de RecyclingCompanys por su nombre (puede devolver una lista vacía)
-  findByName: (name: string) => Promise<RecyclingCompany[]>;
+  // Encuentra una lista de empresas por su nombre (puede devolver una lista vacía)
+  findByName: (nombreempresa: string) => Promise<RecyclingCompany[]>;
 
-  // Actualiza un objeto RecyclingCompany en el repositorio por su ID
+  // Actualiza un objeto empresa en el repositorio por su ID
   updateById: (id: string) => Promise<void>;
 
-  // Elimina un objeto RecyclingCompany por su ID
+  // Elimina un objeto empresa por su ID
   deleteById: (id: string) => Promise<void>;
 
 
 
-  // Obtiene la cantidad total de RecyclingCompanys en el repositorio
+  // Obtiene la cantidad total de empresas en el repositorio
   getCount: () => Promise<number>;
 
-  // Verifica si existe un RecyclingCompany con el ID dado
+  // Verifica si existe un empresa con el ID dado
   existsById: (id: string) => Promise<boolean>;
 
   // Busca RecyclingCompanys por criterios específicos, como filtros avanzados
