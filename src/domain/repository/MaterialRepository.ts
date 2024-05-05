@@ -29,7 +29,6 @@ export interface MaterialRecicledRepositoryInterface {
   existsById: (id: string) => Promise<boolean>;
 
   // Busca MaterialRecicleds por criterios específicos, como filtros avanzados
- 
 
   // Otros métodos del repositorio pueden ser agregados aquí según sea necesario
 }

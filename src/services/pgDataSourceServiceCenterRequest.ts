@@ -89,7 +89,7 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
     // Consulta para obtener el número total de filas
     const countQuery = `SELECT COUNT(*) AS total FROM ${DB_TABLE};`;
     const countResponse = await this.db.query(countQuery);
-    const total = parseInt(countResponse.rows[0].total,10);
+    const total = parseInt(countResponse.rows[0].total, 10);
     return { CenterRequests: centerRequests, total };
   }
 }
