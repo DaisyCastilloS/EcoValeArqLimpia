@@ -4,7 +4,7 @@ export interface AdminServiceInterface {
   getAll: () => Promise<Admin[] | undefined>;
   save(modality: Admin): Promise<void>;
   findById(id: string): Promise<Admin | undefined>;
-  findByName: (nombre: string) => Promise<Admin[]>;
+  findByName: (nombre: string) => Promise<string[] | []> ;
   updateById: (id: string, updatedFields: Partial<Admin>) => Promise<void>;
   deleteById: (id: string) => Promise<void>;
   findByDate(date: string): Promise<Admin[] | []>;

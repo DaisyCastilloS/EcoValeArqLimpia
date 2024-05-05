@@ -28,15 +28,15 @@ export default class PGDataSourceServiceAdmin implements AdminServiceInterface {
     return result;
   }
 
-  async findByName(nombre: string): Promise<Admin[] | []> {
+  async findByName(nombre: string): Promise<string[] | []> {
     const dbResponse = await this.db.query(`SELECT nombre FROM ${DB_TABLE} WHERE nombre = $1 LIMIT 4;`, [nombre]);
-    const result = dbResponse.rows.map((Admin) => Admin.nombre);
+    const result = dbResponse.rows.map((adminRow) => adminRow.nombre);
     return result;
   }
 
   // como es admin, peude actualizar cualqiera de los campos
   async updateById(id: string, updatedFields: Partial<Admin>): Promise<any> {
-    const updateList = Object.entries(updatedFields).map(([key, _], index) => `${key} = $${index + 2}`).join(', ');
+    const updateList = Object.entries(updatedFields).map(([key], index) => `${key} = $${index + 2}`).join(', ');
     const dbResponse = await this.db.query(
       `UPDATE ${DB_TABLE} 
        SET ${updateList}, updatedAt = CURRENT_TIMESTAMP 
@@ -53,7 +53,7 @@ export default class PGDataSourceServiceAdmin implements AdminServiceInterface {
     );
   }
 
-  // si el tipo Admin puede acceder a todos los campos pero quiero devolver solo nombre, apellido y email
+  // si el tipo Admin acceder a todos los campos pero quiero devolver solo nombre, apellido y email
   async getAll(): Promise<Admin[] | []> {
     const dbResponse = await this.db.query(
       `SELECT nombre, apellido, email FROM ${DB_TABLE};`,
@@ -66,7 +66,7 @@ export default class PGDataSourceServiceAdmin implements AdminServiceInterface {
     const dbResponse = await this.db.query(
       `SELECT COUNT(*) AS adminCount FROM ${DB_TABLE} WHERE isAdmin = true;`,
     );
-    return parseInt(dbResponse.rows[0].adminCount);
+    return parseInt(dbResponse.rows[0].date, 10);
   }
 
   async findPaginated(options: {
@@ -89,7 +89,7 @@ export default class PGDataSourceServiceAdmin implements AdminServiceInterface {
     );
 
     const totalResponse = await this.db.query(`SELECT COUNT(*) AS total FROM ${DB_TABLE};`);
-    const total = parseInt(totalResponse.rows[0].total);
+    const total = parseInt(totalResponse.rows[0].date, 10);
 
     const admins = dbResponse.rows.map((admin) => ({
       id: admin.id,

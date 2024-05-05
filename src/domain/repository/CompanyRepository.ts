@@ -13,7 +13,7 @@ export interface RecyclingCompanyRepositoryInterface {
   findById: (id: string) => Promise<RecyclingCompany | undefined>;
 
   // Encuentra una lista de empresas por su nombre (puede devolver una lista vacía)
-  findByName: (nombreempresa: string) => Promise<RecyclingCompany[]>;
+  findByName(nombreempresa: string): Promise<string[] | []>
 
   // Actualiza un objeto empresa ,algunos campos  en el repositorio por su ID
   updateById: (id: string, updatedFields: Partial<RecyclingCompany>) => Promise<void>;

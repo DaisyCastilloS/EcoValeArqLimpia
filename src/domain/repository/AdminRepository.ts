@@ -11,7 +11,7 @@ export interface AdminRepositoryInterface {
   findById: (id: string) => Promise<Admin | undefined>;
 
   // Encuentra una lista de Admins por su nombre (puede devolver una lista vacía)
-  findByName: (nombre: string) => Promise<Admin[]>;
+  findByName: (nombre: string) => Promise<string[] | []> ;
 
   // como es admin, a traves de la id puede actualizar cualquiera de los campos
   // por eso el partial admin

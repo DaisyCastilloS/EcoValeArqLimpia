@@ -3,15 +3,15 @@ import { RecyclingCompanyServiceInterface } from './interfaces/CompanyServices';
 import { SQLDatabaseWrapperInterface } from './interfaces/SQLDatabaseWrapper';
 
 const DB_TABLE = 'RecyclingCompany';
-export default class PGDataSourceServiceRecyclingCompany implements RecyclingCompanyServiceInterface {
+export default class PGDataSrcServiceRecyclingCompany implements RecyclingCompanyServiceInterface {
   db: SQLDatabaseWrapperInterface;
 
   constructor(db: SQLDatabaseWrapperInterface) {
     this.db = db;
   }
 
-  async save(RecyclingCompany: RecyclingCompany): Promise<void> {
-    await this.db.query(`insert into ${DB_TABLE} (id,nombreempresa,rubro,direccion,emailempresa,password,horario_atencion,vouchers,recycledMaterials,recyclingPoints,createdAt,updatedAt) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12);`, [RecyclingCompany.id, RecyclingCompany.nombreempresa, RecyclingCompany.rubro, RecyclingCompany.direccion, RecyclingCompany.emailempresa, RecyclingCompany.password, RecyclingCompany.horario_atencion, RecyclingCompany.vouchers, RecyclingCompany.recycledMaterials, RecyclingCompany.recyclingPoints, RecyclingCompany.createdAt, RecyclingCompany.updatedAt]);
+  async save(recyclingCompany: RecyclingCompany): Promise<void> {
+    await this.db.query(`insert into ${DB_TABLE} (id,nombreempresa,rubro,direccion,emailempresa,password,horario_atencion,vouchers,recycledMaterials,recyclingPoints,createdAt,updatedAt) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12);`, [recyclingCompany.id, recyclingCompany.nombreempresa, recyclingCompany.rubro, recyclingCompany.direccion, recyclingCompany.emailempresa, recyclingCompany.password, recyclingCompany.horario_atencion, recyclingCompany.vouchers, recyclingCompany.recycledMaterials, recyclingCompany.recyclingPoints, recyclingCompany.createdAt, recyclingCompany.updatedAt]);
   }
 
   async findById(id: string): Promise<RecyclingCompany | undefined> {
@@ -28,9 +28,9 @@ export default class PGDataSourceServiceRecyclingCompany implements RecyclingCom
     return result;
   }
 
-  async findByName(nombreempresa: string): Promise<RecyclingCompany[] | []> {
+  async findByName(nombreempresa: string): Promise<string[] | []> {
     const dbResponse = await this.db.query(`SELECT nombreempresa FROM ${DB_TABLE} WHERE nombreempresa = $1 LIMIT 4;`, [nombreempresa]);
-    const result = dbResponse.rows.map((RecyclingCompany) => RecyclingCompany.nombreempresa);
+    const result = dbResponse.rows.map((companyRow) => companyRow.nombreempresa);
     return result;
   }
 
@@ -56,7 +56,7 @@ export default class PGDataSourceServiceRecyclingCompany implements RecyclingCom
     );
   }
 
-  // si el tipo RecyclingCompany puede acceder a todos los campos pero quiero devolver solo nombre, apellido y email
+  // el tipo RecyclingCompany accede a todos los campos quiero devolver solo nombre, apellido, email
   async getAll(): Promise<RecyclingCompany[] | []> {
     const dbResponse = await this.db.query(
       `SELECT nombre, apellido, email FROM ${DB_TABLE};`,
@@ -69,7 +69,7 @@ export default class PGDataSourceServiceRecyclingCompany implements RecyclingCom
     const dbResponse = await this.db.query(
       `SELECT COUNT(*) AS RecyclingCompanyCount FROM ${DB_TABLE} WHERE isRecyclingCompany = true;`,
     );
-    return parseInt(dbResponse.rows[0].RecyclingCompanyCount);
+    return parseInt(dbResponse.rows[0].RecyclingCompanyCount, 10);
   }
 
   async existsById(id: string): Promise<boolean> {
