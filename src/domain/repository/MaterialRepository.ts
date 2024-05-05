@@ -12,10 +12,10 @@ export interface MaterialRecicledRepositoryInterface {
   findById: (id: string) => Promise<MaterialRecicled | undefined>;
 
   // Encuentra una lista de MaterialRecicleds por su nombre (puede devolver una lista vacía)
-  findByName: (name: string) => Promise<MaterialRecicled[]>;
+  findByName(nombrematerial: string): Promise<MaterialRecicled[] | []> ;
 
   // Actualiza un objeto MaterialRecicled en el repositorio por su ID
-  updateById: (id: string) => Promise<void>;
+  updateById(id: string, description: string): Promise<void> ;
 
   // Elimina un objeto MaterialRecicled por su ID
   deleteById: (id: string) => Promise<void>;
@@ -29,15 +29,7 @@ export interface MaterialRecicledRepositoryInterface {
   existsById: (id: string) => Promise<boolean>;
 
   // Busca MaterialRecicleds por criterios específicos, como filtros avanzados
-  findByCriteria: (criteria: any) => Promise<MaterialRecicled[]>;
-
-  // Realiza operaciones avanzadas de paginación y ordenamiento
-  findPaginated: (options: {
-    page: number;
-    pageSize: number;
-    sortBy?: string;
-    sortOrder?: 'asc' | 'desc';
-  }) => Promise<{ MaterialRecicleds: MaterialRecicled[]; total: number }>;
+ 
 
   // Otros métodos del repositorio pueden ser agregados aquí según sea necesario
 }

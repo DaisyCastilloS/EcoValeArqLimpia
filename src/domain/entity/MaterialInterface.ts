@@ -6,4 +6,6 @@ export interface MaterialRecicled {
   imagen?: string
   ticketsRelacionados: string[]
   centrosReciclaje: string[]
+  createdAt: Date
+  updatedAt: Date
 }
