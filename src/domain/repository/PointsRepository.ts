@@ -15,7 +15,7 @@ export interface RecyclingPointRepositoryInterface {
   findByName: (name: string) => Promise<RecyclingPoint[] | []>;
 
   // Actualiza un objeto RecyclingPoint en el repositorio por su ID
-  updateById: (id: string,updatedFields: Partial<RecyclingPoint>) => Promise<any>;
+  updateById: (id: string, updatedFields: Partial<RecyclingPoint>) => Promise<any>;
 
   // Elimina un objeto RecyclingPoint por su ID
   deleteById: (id: string, updatedFields: Partial<RecyclingPoint>) => Promise<void>;
@@ -23,12 +23,9 @@ export interface RecyclingPointRepositoryInterface {
   // Obtiene la cantidad total de RecyclingPoints en el repositorio
   getCount: () => Promise<number>;
 
-
   // Busca RecyclingPoints por criterios específicos, como filtros avanzados
 
-
   // Realiza operaciones avanzadas de paginación y ordenamiento
-
 
   // Otros métodos del repositorio pueden ser agregados aquí según sea necesario
 }

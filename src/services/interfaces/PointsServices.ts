@@ -10,5 +10,4 @@ export interface RecyclingPointServiceInterface {
   findByDate(date: string): Promise<RecyclingPoint[] | []>;
   getCount: () => Promise<number>;
 
-
 }

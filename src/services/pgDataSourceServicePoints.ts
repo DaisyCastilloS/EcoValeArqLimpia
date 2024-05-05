@@ -32,25 +32,25 @@ export default class PGDataSourceServiceRecyclingPoint implements RecyclingPoint
     const dbResponse = await this.db.query(`SELECT properties->>'name' AS name FROM ${DB_TABLE} WHERE nombre = $1 LIMIT 4;`, [name]);
     const result = dbResponse.rows.map((row) => row.name);
     return result;
-}
+  }
 
   // como es RecyclingPoint, peude actualizar cualqiera de los campos
   async updateById(id: string, updatedFields: Partial<RecyclingPoint>): Promise<any> {
     const newName = updatedFields.properties?.name;
 
     if (!newName) {
-        throw new Error('El campo "name" no está presente en los campos actualizados.');
+      throw new Error('El campo "name" no está presente en los campos actualizados.');
     }
 
     const dbResponse = await this.db.query(
-        `UPDATE ${DB_TABLE} 
+      `UPDATE ${DB_TABLE} 
          SET properties = properties || '{"name": $2}'::jsonb, updatedAt = CURRENT_TIMESTAMP 
          WHERE id = $1;`,
-        [id, newName]
+      [id, newName],
     );
 
     return dbResponse;
-}
+  }
 
   async deleteById(id: string): Promise<void> {
     await this.db.query(
@@ -59,7 +59,7 @@ export default class PGDataSourceServiceRecyclingPoint implements RecyclingPoint
     );
   }
 
-  // si el tipo RecyclingPoint acceder a todos los campos pero quiero devolver solo nombre, apellido y email
+  // tipo RecyclingPoint accede a todos los campos,quiero devolver solo nombre, apellido y email
   async getAll(): Promise<RecyclingPoint[] | []> {
     const dbResponse = await this.db.query(
       `SELECT nombre, apellido, email FROM ${DB_TABLE};`,
@@ -74,5 +74,4 @@ export default class PGDataSourceServiceRecyclingPoint implements RecyclingPoint
     );
     return parseInt(dbResponse.rows[0].date, 10);
   }
-
 }
