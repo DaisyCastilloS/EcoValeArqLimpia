@@ -20,20 +20,18 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
     return result.rows[0];
   }
 
-  //a traves de la id, devuelve la ubicacion
+  // a traves de la id, devuelve la ubicacion
   async findByIdubicacion(id: string): Promise<{ ubicacionRecoleccion: string } | undefined> {
     const query = 'SELECT ubicacionRecoleccion FROM center_requests WHERE id = $1 LIMIT 1;';
     const result = await this.db.query(query, [id]);
     return result.rows[0];
   }
 
-
-  //actualizar campo materialarecolectar usando la id desde el front 
+  // actualizar campo materialarecolectar usando la id desde el front
   async updateById(id: string, newMaterial: string): Promise<void> {
     const query = 'UPDATE center_requests SET materialaRecolectar = $1 WHERE id = $2;';
     await this.db.query(query, [newMaterial, id]);
   }
-
 
   async getAll(): Promise<CenterRequest[] | undefined> {
     const dbResponse = await this.db.query(
@@ -51,17 +49,16 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
   async findByDate(date: string): Promise<CenterRequest[] | []> {
     const dbResponse = await this.db.query(`SELECT extract(year from createdAt)||'-'||extract(month from createdAt)||'-'||extract(day from createdAt) as date 
   FROM ${DB_TABLE} WHERE createdAt = $1 LIMIT 1;`, [date]);
-  const result = dbResponse.rows[0].date;
-  return result;
-  
+    const result = dbResponse.rows[0].date;
+    return result;
   }
 
-  //cantidad total de centerrequest 
+  // cantidad total de centerrequest
   async getCount(): Promise<number> {
     const dbResponse = await this.db.query(
-      `SELECT COUNT(*) AS count FROM ${DB_TABLE};`
+      `SELECT COUNT(*) AS count FROM ${DB_TABLE};`,
     );
-    const count = dbResponse.rows[0].count;
+    const { count } = dbResponse.rows[0];
     return parseInt(count);
   }
 
@@ -79,7 +76,7 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
     const offset = (options.page - 1) * options.pageSize;
     const sortOrder = options.sortOrder || 'asc';
     const sortBy = options.sortBy || 'createdAt'; // Puedes cambiar el campo de ordenamiento predeterminado según tus necesidades
-  
+
     // Consulta para obtener las filas de la página actual
     const query = `
       SELECT * FROM ${DB_TABLE}
@@ -88,17 +85,12 @@ export default class PGDataSourceServiceCenterRequest implements CenterRequestSe
     `;
     const resultResponse = await this.db.query(query, [options.pageSize, offset]);
     const centerRequests = resultResponse.rows;
-  
+
     // Consulta para obtener el número total de filas
     const countQuery = `SELECT COUNT(*) AS total FROM ${DB_TABLE};`;
     const countResponse = await this.db.query(countQuery);
     const total = parseInt(countResponse.rows[0].total);
-  
+
     return { CenterRequests: centerRequests, total };
   }
-  
-  
 }
-
-
-

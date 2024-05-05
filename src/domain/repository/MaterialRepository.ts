@@ -2,10 +2,9 @@ import { MaterialRecicled } from '../entity/MaterialInterface';
 
 export interface MaterialRecicledRepositoryInterface {
 
-   // Obtiene todos los MaterialRecicleds en el repositorio
-   getAll: () => Promise<MaterialRecicled[] | undefined>;
+  // Obtiene todos los MaterialRecicleds en el repositorio
+  getAll: () => Promise<MaterialRecicled[] | undefined>;
 
-  
   // Guarda un objeto MaterialRecicled en el repositorio
   save: (modality: MaterialRecicled) => Promise<void>;
 

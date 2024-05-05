@@ -4,7 +4,6 @@ export interface VoucherRepositoryInterface {
   // Obtiene todos los Vouchers en el repositorio
   getAll: () => Promise<Voucher[] | undefined>;
 
-
   // Guarda un objeto Voucher en el repositorio
   save: (modality: Voucher) => Promise<void>;
 

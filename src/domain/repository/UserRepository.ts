@@ -5,7 +5,6 @@ export interface UserRepositoryInterface {
   // Obtiene todos los Users en el repositorio
   getAll: () => Promise<User[] | undefined>;
 
-
   // Guarda un objeto User en el repositorio
   save: (modality: User) => Promise<void>;
 

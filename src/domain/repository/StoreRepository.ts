@@ -20,8 +20,6 @@ export interface StoreRepositoryInterface {
   // Elimina un objeto Store por su ID
   deleteById: (id: string) => Promise<void>;
 
-
-
   // Obtiene la cantidad total de Stores en el repositorio
   getCount: () => Promise<number>;
 

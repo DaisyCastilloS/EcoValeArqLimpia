@@ -2,8 +2,8 @@ import { Role } from '../entity/RoleInterface';
 
 export interface RoleRepositoryInterface {
 
-    // Obtiene todos los Roles en el repositorio
-    getAll: () => Promise<Role[] | undefined>;
+  // Obtiene todos los Roles en el repositorio
+  getAll: () => Promise<Role[] | undefined>;
 
   // Guarda un objeto Role en el repositorio
   save: (modality: Role) => Promise<void>;
@@ -19,8 +19,6 @@ export interface RoleRepositoryInterface {
 
   // Elimina un objeto Role por su ID
   deleteById: (id: string) => Promise<void>;
-
-
 
   // Obtiene la cantidad total de Roles en el repositorio
   getCount: () => Promise<number>;

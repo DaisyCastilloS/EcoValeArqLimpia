@@ -24,9 +24,8 @@ export default class PGDataSourceServiceAdmin implements AdminServiceInterface {
   async findByDate(date: string): Promise<Admin[] | []> {
     const dbResponse = await this.db.query(`SELECT extract(year from createdAt)||'-'||extract(month from createdAt)||'-'||extract(day from createdAt) as date 
   FROM ${DB_TABLE} WHERE createdAt = $1 LIMIT 1;`, [date]);
-  const result = dbResponse.rows[0].date;
-  return result;
-  
+    const result = dbResponse.rows[0].date;
+    return result;
   }
 
   async findByName(nombre: string): Promise<Admin[] | []> {
@@ -37,35 +36,35 @@ export default class PGDataSourceServiceAdmin implements AdminServiceInterface {
 
   // como es admin, peude actualizar cualqiera de los campos
   async updateById(id: string, updatedFields: Partial<Admin>): Promise<any> {
-    const updateList = Object.entries(updatedFields).map(([key, _], index) => `${key} = $${index + 2}`).join(", ");
+    const updateList = Object.entries(updatedFields).map(([key, _], index) => `${key} = $${index + 2}`).join(', ');
     const dbResponse = await this.db.query(
       `UPDATE ${DB_TABLE} 
        SET ${updateList}, updatedAt = CURRENT_TIMESTAMP 
        WHERE id = $1;`,
-      [id, ...Object.values(updatedFields)]
+      [id, ...Object.values(updatedFields)],
     );
     return dbResponse;
   }
 
   async deleteById(id: string): Promise<void> {
-await this.db.query(
+    await this.db.query(
       `DELETE FROM ${DB_TABLE} WHERE id = $1;`,
-      [id]
+      [id],
     );
   }
 
   // si el tipo Admin puede acceder a todos los campos pero quiero devolver solo nombre, apellido y email
   async getAll(): Promise<Admin[] | []> {
     const dbResponse = await this.db.query(
-      `SELECT nombre, apellido, email FROM ${DB_TABLE};`
+      `SELECT nombre, apellido, email FROM ${DB_TABLE};`,
     );
     return dbResponse.rows;
   }
 
-  //numero de admons registrados
+  // numero de admons registrados
   async getCount(): Promise<number> {
     const dbResponse = await this.db.query(
-      `SELECT COUNT(*) AS adminCount FROM ${DB_TABLE} WHERE isAdmin = true;`
+      `SELECT COUNT(*) AS adminCount FROM ${DB_TABLE} WHERE isAdmin = true;`,
     );
     return parseInt(dbResponse.rows[0].adminCount);
   }
@@ -76,20 +75,22 @@ await this.db.query(
     sortBy?: string;
     sortOrder?: 'asc' | 'desc';
   }): Promise<{ Admins: Admin[]; total: number }> {
-    const { page, pageSize, sortBy = 'id', sortOrder = 'asc' } = options;
+    const {
+      page, pageSize, sortBy = 'id', sortOrder = 'asc',
+    } = options;
     const offset = (page - 1) * pageSize;
-  
+
     const dbResponse = await this.db.query(
       `SELECT id, isAdmin, nombre, apellido, email, password, roles, createdAt, updatedAt, empresas 
        FROM ${DB_TABLE}
        ORDER BY ${sortBy} ${sortOrder}
        LIMIT $1 OFFSET $2;`,
-      [pageSize, offset]
+      [pageSize, offset],
     );
-  
+
     const totalResponse = await this.db.query(`SELECT COUNT(*) AS total FROM ${DB_TABLE};`);
     const total = parseInt(totalResponse.rows[0].total);
-  
+
     const admins = dbResponse.rows.map((admin) => ({
       id: admin.id,
       isAdmin: admin.isAdmin,
@@ -100,9 +101,9 @@ await this.db.query(
       roles: admin.roles,
       createdAt: admin.createdAt.toISOString(),
       updatedAt: admin.updatedAt.toISOString(),
-      empresas: admin.empresas
+      empresas: admin.empresas,
     }));
-  
+
     return { Admins: admins, total };
   }
 }
