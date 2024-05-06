@@ -9,12 +9,5 @@ export interface RoleServiceInterface {
   deleteById: (id: string) => Promise<void>;
   findByDate(date: string): Promise<Role[] | []>;
   getCount: () => Promise<number>;
-  existsById: (id: string) => Promise<boolean>;
-  findByCriteria: (criteria: any) => Promise<Role[]>;
-  findPaginated: (options: {
-    page: number;
-    pageSize: number;
-    sortBy?: string;
-    sortOrder?: 'asc' | 'desc';
-  }) => Promise<{ Roles: Role[]; total: number }>;
+
 }

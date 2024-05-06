@@ -12,10 +12,12 @@ export interface StoreRepositoryInterface {
   findById: (id: string) => Promise<Store | undefined>;
 
   // Encuentra una lista de Stores por su nombre (puede devolver una lista vacía)
-  findByName: (name: string) => Promise<Store[]>;
+  findByName: (nombre: string) => Promise<Store[]>;
+
+  findByDate(date: string): Promise<Store[] | []>;
 
   // Actualiza un objeto Store en el repositorio por su ID
-  updateById: (id: string) => Promise<void>;
+  updateById: (id: string, updatedFields: Partial<Store>) => Promise<any>;
 
   // Elimina un objeto Store por su ID
   deleteById: (id: string) => Promise<void>;
@@ -24,18 +26,10 @@ export interface StoreRepositoryInterface {
   getCount: () => Promise<number>;
 
   // Verifica si existe un Store con el ID dado
-  existsById: (id: string) => Promise<boolean>;
 
   // Busca Stores por criterios específicos, como filtros avanzados
-  findByCriteria: (criteria: any) => Promise<Store[]>;
 
   // Realiza operaciones avanzadas de paginación y ordenamiento
-  findPaginated: (options: {
-    page: number;
-    pageSize: number;
-    sortBy?: string;
-    sortOrder?: 'asc' | 'desc';
-  }) => Promise<{ Stores: Store[]; total: number }>;
 
   // Otros métodos del repositorio pueden ser agregados aquí según sea necesario
 }
